@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+}
+.container {
+  height: 100%;
+}
+#root {
+  margin-top: 57px;
+  height: 100%;
+}
+form {
+  display: inline-block;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+[class*="col-"] {
+    margin-bottom: 15px;
+}
