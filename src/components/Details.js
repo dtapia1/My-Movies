@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from "react-dom";
+import React from 'react';
 import { Grid, Row, Col, Clearfix} from 'react-bootstrap';
 import Movie from './Movie.js'
 var queryString = require('query-string');
@@ -39,7 +38,7 @@ class Details extends React.Component {
         },
         {
           title: 'Planet of the ',
-          actors: ['Woody', 'Ceasr'],
+          actors: ['Woody', 'Ceaser'],
           genre: 'Fantasy',
           year: 2017,
           rating: 'PG-13',

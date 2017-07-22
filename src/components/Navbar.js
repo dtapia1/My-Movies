@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from "react-dom";
-import { FormGroup, FormControl, ButtonControl, Button} from 'react-bootstrap';
+import React from 'react';
 var NavLink = require('react-router-dom').NavLink;
 
 function Navbar (props) {

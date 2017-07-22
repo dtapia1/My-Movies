@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
-import ReactDOM from "react-dom";
-import { Grid, Row, Col, FormGroup, FormControl, HelpBlock, ControlLabel, Button} from 'react-bootstrap';
+import React from 'react';
+import { Grid, Row, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
 var Link = require('react-router-dom').Link;
 
-const Home = React.createClass({
-  getInitialState() {
-    return {
+class Home extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
       title: ''
     };
-  },
 
-  getValidationState() {
-    const length = this.state.title.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
-  },
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(event) {
+    var value = event.target.value;
 
-  handleChange(e) {
-    this.setState({ title: e.target.value });
+    this.setState(function () {
+      return {
+        title: value
+      }
+    });
+  }
 
-    // this.setState(function () {
-    //   return {
-    //     title: value
-    //   }
-    // });
-
-  },
 
   render() {
     var match = this.props.match;
@@ -38,7 +33,6 @@ const Home = React.createClass({
           <form>
             <FormGroup
               controlId="formBasicText"
-              validationState={this.getValidationState()}
             >
               <ControlLabel>Search for a Movie</ControlLabel>
               <FormControl
@@ -67,6 +61,6 @@ const Home = React.createClass({
       </Grid>
     );
   }
-});
+}
 
 export default Home;

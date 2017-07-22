@@ -8,6 +8,12 @@
   margin-top: 57px;
   height: 100%;
 }
+hr {
+  margin: 0;
+  border: 0 !important;
+  border-top: 1px solid rgba(0,0,0,.1) !important;
+}
+
 form {
   display: inline-block;
 }
@@ -22,4 +28,33 @@ li {
 
 [class*="col-"] {
     margin-bottom: 15px;
+}
+
+.modal-form {
+  display: block;
+}
+
+.movie-title {
+  font-size: 2rem;
+}
+.card-block p {
+  margin: 0;
+}
+.btn {
+  padding: .5rem 1.2rem;
+  font-size: 1rem;
+  border-radius: .2rem;
+}
+
+#fab {
+  color: #5cb85c;
+  bottom: 0;
+  position: fixed;
+  margin: 1em .25em .5em 1em;
+  right: 0px;
+  z-index: 2;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+
 }
