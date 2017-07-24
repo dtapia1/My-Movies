@@ -1,8 +1,5 @@
 import React from 'react';
-import { Grid, Row, Col, ControlLabel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
-
-var Link = require('react-router-dom').Link;
-var PropTypes = require('prop-types');
+import {FormGroup} from 'react-bootstrap';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -12,7 +9,6 @@ class Modal extends React.Component {
       genre: '',
       year: '',
       rating: '',
-      posterUrl: '',
       actors: [],
       validTitle: false
     };
@@ -25,12 +21,12 @@ class Modal extends React.Component {
     const length = this.state.title.length;
     if (length > 0) {
       return 'success';
-    } else 'error';
+    } else return 'error';
   }
   getValidationStateGenre() {
     const length = this.state.genre.length;
     if (length > 0) return 'success';
-    else 'error';
+    else return 'error';
   }
   getValidationStateYear() {
     let val = this.state.year;
@@ -39,15 +35,15 @@ class Modal extends React.Component {
     const length = val.length;
 
     if (length === 4 && val > 0 && res) return 'success';
-    else 'error';
+    else return 'error';
   }
   getValidationStateActors() {
     let val = this.state.actors;
     let pattern = new RegExp("[A-Za-z]");
     let res = pattern.test(val);
-    const length = val.length;
+
     if (res) return 'success';
-    else 'error';
+    else return 'error';
   }
   getValidationStateRating() {
     let val = this.state.rating;
@@ -56,12 +52,13 @@ class Modal extends React.Component {
     const length = val.length;
 
     if (length === 1 && res) return 'success';
-    else 'error';
+    else return 'error';
   }
 
   handleChange(event) {
     var id = event.target.id;
     var value = event.target.value;
+
     if(id === 'actors'){
       value = value.split(',');
     }
@@ -78,7 +75,8 @@ class Modal extends React.Component {
     let validYear = this.getValidationStateYear();
     let validActors = this.getValidationStateActors();
     let validRating = this.getValidationStateRating();
-    if(validTitle && validGenre && validYear && validActors && validRating){
+    if(validTitle === 'success' && validGenre ==='success'
+    && validYear === 'success' && validActors === 'success' && validRating === 'success'){
       return true;
     } else {
       return false;
@@ -90,10 +88,9 @@ class Modal extends React.Component {
       this.state.genre,
       this.state.year,
       this.state.rating,
-      this.state.posterUrl,
       this.state.actors
     );
-    // event.preventDefault();
+    event.preventDefault();
   }
   render() {
     return(
@@ -143,11 +140,8 @@ class Modal extends React.Component {
           </div>
         </div>
       </div>
-
-
     );
   }
 }
-
 
 export default Modal;

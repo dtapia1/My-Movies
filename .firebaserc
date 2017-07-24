@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "my-movies-48e3a"
+    "default": "my-movies-48e3a",
+    "my-movies": "my-movies-48e3a"
   }
 }

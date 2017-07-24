@@ -13,7 +13,9 @@ hr {
   border: 0 !important;
   border-top: 1px solid rgba(0,0,0,.1) !important;
 }
-
+a:hover {
+  text-decoration: none;
+}
 form {
   display: inline-block;
 }
@@ -35,15 +37,13 @@ li {
 }
 
 .movie-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
-.card-block p {
-  margin: 0;
-}
-.btn {
-  padding: .5rem 1.2rem;
-  font-size: 1rem;
-  border-radius: .2rem;
+.remove-btn {
+  width: 75px;
+  font-size: 1.4em;
+  margin: 0 auto;
+  padding: 0;
 }
 
 #fab {
@@ -56,5 +56,81 @@ li {
   width: 50px;
   height: 50px;
   text-align: center;
+}
+.fa-pencil {
+  position: absolute;
+  z-index: 3;
+  top: 365px;
+  right: 10px;
+  background: #03A9F4;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0 5px 5px rgba(0,0,0,0.25);
+	-webkit-box-shadow: 0 5px 5px rgba(0,0,0,0.25);
+	-o-box-shadow: 0 5px 5px rgba(0,0,0,0.25);
+}
+@media (hover) {
+  .fa-pencil:hover {
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+  	-moz-box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+  	-webkit-box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+  	-o-box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+    transform: scale(1.1);
+  }
+  .remove-btn:hover {
+    transform: scale(1.1);
+  }
+}
 
+#movie {
+  color: #5cb85c;
+  border: 50% 50%;
+}
+@media screen and (min-width: 31.25rem) {
+  #fab {
+    margin: 1em 1em 1em 1em;
+  }
+}
+@media screen and (min-width: 81.25rem) {
+  #fab {
+    margin: 1em 2em 1em 1em;
+  }
+}
+@media screen and (min-width: 90.625rem) {
+  #fab {
+    margin: 1em 4em 1em 1em;
+  }
+}
+.card {
+  max-width: 18rem;
+  align-content: center;
+}
+.card-block {
+  height: 190px;
+}
+.card-block p {
+  margin: 0;
+}
+.card-img-top {
+  max-height: 24rem;
+}
+
+.fa-star {
+  color: #e3cf7a;
+  font-size: 1.2rem;
+}
+.vertical-divider {
+  color: rgba(0,0,0,.25);
+}
+.card-block p {
+  font-weight: lighter;
+}
+.actors {
+  font-weight: normal;
 }

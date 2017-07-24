@@ -1,28 +1,25 @@
 import React from 'react';
-import { Grid, Row, Col} from 'react-bootstrap';
 var PropTypes = require('prop-types');
-
-
-
 
 class Movie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
-      title: null,
+      id: '',
+      title: '',
       actors: [],
-      genre: null,
-      year: null,
-      rating: null,
-      posterUrl: null
+      genre: '',
+      year: '',
+      rating: '',
+      posterUrl: ''
     };
     this.onClickDelete = this.onClickDelete.bind(this);
   }
   onClickDelete() {
-    var id = this.props.id;
+    let id = this.props.id;
     this.props.onDelete(id);
   }
+
   componentDidMount() {
       this.setState(function () {
         return {
@@ -38,50 +35,48 @@ class Movie extends React.Component {
     }
 
   render() {
-    var movies = this.state.movies;
-    var title = this.state.title;
-    var actors = this.state.actors;
-    var genre =  this.state.genre;
-    var year = this.state.year;
-    var rating =  this.state.rating;
-    var posterUrl = this.state.posterUrl;
+    var title = this.props.title;
+    var actors = this.props.actors;
+    var genre =  this.props.genre;
+    var year = this.props.year;
+    var rating =  this.props.rating;
+    var posterUrl = this.props.posterUrl;
 
     return (
-      <li>
-      <div className='card'>
-        <Row className='text-center'>
-          <Col id='card-top'xs={12} md={6}>
-            <CardPoster
-               imageSrc='http://via.placeholder.com/350x425'
-            />
-          </Col>
-          <Col id='card-block' xs={12} md={6} className='my-auto'>
-            <CardBlock
-              movieTitle={title}
-              actors={actors}
-              genre={genre}
-              year={year}
-              rating={rating}
-            />
-          </Col>
-          <hr className='my-0'/>
-          <Col sm={12}>
-            <button type="button" className="btn btn-danger mt-2" onClick={this.onClickDelete}>
-              <i className="fa fa-minus-circle" aria-hidden="true"> REMOVE</i>
-            </button>
-          </Col>
-        </Row>
-      </div>
+      <li id={title}>
+        <div className='card'>
+          <MoviePoster
+             imageSrc={posterUrl}
+          />
+          <CardBlock
+            movieTitle={title}
+            actors={actors}
+            genre={genre}
+            year={year}
+            rating={rating}
+          />
+          <hr/>
+          <button type="button" className="remove-btn btn btn-danger my-2" onClick={this.onClickDelete}>
+            <i className="fa fa-minus-circle" aria-hidden="true"></i>
+          </button>
+        </div>
+
       </li>
+
     )
   }
 }
 
 Movie.PropTypes = {
-  actors: PropTypes.array.isRequired
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  genre: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
+  actors: PropTypes.array.isRequired,
 }
 
-function CardPoster (props) {
+function MoviePoster (props) {
   return (
     <img className ='card-img-top img-fluid'
       src={props.imageSrc}
@@ -93,17 +88,10 @@ function CardPoster (props) {
 function CardBlock (props) {
   return (
     <div className="card-block">
-      <Row>
-        <Col sm={12}>
-          <h1 className="movie-title">{props.movieTitle}</h1>
-        </Col>
-        <Col sm={12}>
-          <p>{props.rating} | {props.genre} | {props.year}</p>
-        </Col>
-        <Col sm={12}>
-          Starring: {props.actors.join(', ')}
-        </Col>
-      </Row>
+      <h1 className="movie-title">{props.movieTitle}</h1>
+      <p className="movie-rating"> <i className="fa fa-star" aria-hidden="true"></i> {props.rating}/5</p>
+      <p>{props.genre} <span className="vertical-divider"> | </span> {props.year}</p>
+      <p className="mt-2"> <span className="actors">Cast</span>: {props.actors.join(', ')}</p>
     </div>
   )
 }
