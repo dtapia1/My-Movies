@@ -90,6 +90,14 @@ class Modal extends React.Component {
       this.state.rating,
       this.state.actors
     );
+    this.setState({
+        title: '',
+        genre: '',
+        year: '',
+        rating: '',
+        actors: [],
+        validTitle: false
+    });
     event.preventDefault();
   }
   render() {
