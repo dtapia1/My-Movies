@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Row} from 'react-bootstrap';
+import { Grid, Row, Modal} from 'react-bootstrap';
 import Movie from './Movie.js';
-import Modal from './Modal.js';
+import MovieModal from './MovieModal.js';
 import * as api from '../utils/api';
 import * as firebase from "firebase";
 
@@ -9,14 +9,17 @@ class Movies extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
       movies: [],
       search:''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.deleteMovie = this.deleteMovie.bind(this);
-    this.updateMovie = this.updateMovie.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleModalClose = this.handleModalClose.bind(this);
+    this.handleModalOpen = this.handleModalOpen.bind(this);
   }
   handleChange(event) {
     var value = event.target.value;
@@ -55,9 +58,10 @@ class Movies extends React.Component {
         alert('Your movie was saved!');
       });
     });
+    this.handleModalClose();
 
   }
-  deleteMovie (id) {
+  handleDelete (id) {
     var database = firebase.database();
     const movieRef = database.ref().child('movies');
     const deleteMovieRef = movieRef.child(id);
@@ -65,7 +69,7 @@ class Movies extends React.Component {
     deleteMovieRef.remove();
   }
 
-  updateMovie(id, title, genre, year, rating, actors) {
+  handleUpdate(id, title, genre, year, rating, actors) {
 
     api.getPosterUrl(title, year)
     .then(function(posterUrl){
@@ -86,14 +90,58 @@ class Movies extends React.Component {
         updateMovieRef.update(update);
       }).then(() => {
         alert('Your movie was updated!');
+        this.handleModalClose();
       })
+
   }
 
-  compnentWillMount() {
+  handleModalOpen(type, header, ...update) {
+    let updateMovie = update;
+    this.setState({
+      showModal: true,
+      header: header,
+      type: type,
+      update: updateMovie
+    });
+  }
+  handleModalClose() {
+    this.setState({ showModal: false });
+  }
+  renderModal() {
+    console.log('render modal');
+    console.log(this.state.showModal)
+    if (!this.state.showModal) {
+      return null;
+    }
+
+    if(this.state.type === "ADD") {
+      return (
+        <MovieModal
+          onModalClose={this.handleModalClose}
+          onSubmit={this.handleSubmit}
+          header={this.state.header}
+          movieToUpdate={this.state.update}
+          type={this.state.type}
+        />
+      );
+    } else {
+      return (
+        <MovieModal
+          onModalClose={this.handleModalClose}
+          onSubmit={this.handleUpdate}
+          header={this.state.header}
+          movieToUpdate={this.state.update}
+          type={this.state.type}
+        />
+      )
+    }
+
+  }
+
+  componentDidMount(){
     //login
     firebase.auth().signInAnonymously();
-  }
-  componentDidMount(){
+
     const database = firebase.database();
     const moviesRef = database.ref().child('movies');
 
@@ -138,7 +186,8 @@ class Movies extends React.Component {
     });
   }
 
-  render(){
+  render() {
+
     let filteredMovies = this.state.movies.filter(
       (movie) => {
         return movie.title.toLowerCase()
@@ -148,6 +197,9 @@ class Movies extends React.Component {
 
     return(
       <Grid>
+        <Modal show={this.state.showModal}>
+          {this.renderModal()}
+        </Modal>
         <input
           className="my-3"
           type="text"
@@ -161,7 +213,7 @@ class Movies extends React.Component {
           <Row className="no-gutters">
             {filteredMovies.map((movie, index) => {
               return (
-                <div className='col-12 col-md-6 col-lg-4' key={index}>
+                <div className='col-12 col-md-6 col-lg-4' key={movie.id}>
                     <Movie
                       id={movie.id}
                       index={index}
@@ -171,18 +223,18 @@ class Movies extends React.Component {
                       year={movie.year}
                       rating={movie.rating}
                       posterUrl= {movie.posterUrl}
-                      onDelete={this.deleteMovie}
-                      onUpdate={this.updateMovie}
+                      onClickDelete={() => this.handleDelete(movie.id)}
+                      onUpdate={() => this.handleModalOpen('UPDATE', 'UPDATE MOVIE', movie.id,
+                        movie.title, movie.genre, movie.year, movie.rating, movie.actors)}
                     />
                 </div>
               )
             })}
           </Row>
         </ul>
-        <Modal
-          onSubmit={this.handleSubmit}
-        />
-          <i id="fab" className="fa fa-3x fa-plus-circle" data-toggle="modal" data-target="#movieModal" aria-hidden="true"></i>
+        <i id="fab" className="fa fa-plus"
+          onClick={() => this.handleModalOpen('ADD', 'ADD MOVIE')}
+          aria-hidden="true" ></i>
       </Grid>
     );
   }

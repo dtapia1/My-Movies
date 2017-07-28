@@ -4,7 +4,9 @@ var NavLink = require('react-router-dom').NavLink;
 function Navbar (props) {
   return (
     <nav className="fixed-top navbar navbar-toggleable-md navbar-inverse bg-inverse">
-      <NavLink exact activeClassName='navbar-brand active' to='/'>My Movies</NavLink>
+      <div className='nav-container container'>
+        <NavLink exact activeClassName='navbar-brand active' to='/'>My Movies</NavLink>
+      </div>
     </nav>
 )};
 
